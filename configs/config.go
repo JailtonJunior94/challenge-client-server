@@ -13,6 +13,8 @@ type Config struct {
 	DevelopmentMode    bool   `mapstructure:"DEVELOPMENT_MODE"`
 	HttpClientTimeout  int    `mapstructure:"HTTP_CLIENT_TIMEOUT_MS"`
 	DBTimeout          int    `mapstructure:"DB_TIMEOUT_MS"`
+	ServerBaseURL      string `mapstructure:"SERVER_BASE_URL"`
+	ServerTimeoutMs    int    `mapstructure:"SERVER_TIMEOUT_MS"`
 }
 
 func LoadConfig(path string) (*Config, error) {

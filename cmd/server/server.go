@@ -13,6 +13,7 @@ import (
 	"github.com/jailtonjunior94/challenge-client-server/internal/infra/web/handlers"
 	"github.com/jailtonjunior94/challenge-client-server/internal/usecases"
 	"github.com/jailtonjunior94/challenge-client-server/pkg/logger"
+	"github.com/jailtonjunior94/challenge-client-server/pkg/web"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -38,8 +39,9 @@ func main() {
 	defer db.Close()
 
 	httpClient := interfaces.NewHttpClient(config)
+	httpRequest := web.NewHttpRequest(logger, httpClient)
 	exchangeRepository := repositories.NewExchangeRepository(db)
-	economyRepository := repositories.NewEconomy(config, logger, httpClient)
+	economyRepository := repositories.NewEconomy(config, logger, httpRequest)
 	createExchangeUseCase := usecases.NewCreateExchangeUseCase(config, logger, economyRepository, exchangeRepository)
 	exchangeHandler := handlers.NewExchangeHandler(createExchangeUseCase)
 

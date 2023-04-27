@@ -14,21 +14,21 @@ import (
 	"go.uber.org/zap"
 )
 
-type economyRepository struct {
+type exchangeServer struct {
 	config      *configs.Config
 	logger      *zap.SugaredLogger
 	httpRequest web.IHttpRequest
 }
 
-func NewEconomy(config *configs.Config, logger *zap.SugaredLogger, httpRequest web.IHttpRequest) interfaces.EconomyRepository {
-	return &economyRepository{
+func NewExchangeServer(config *configs.Config, logger *zap.SugaredLogger, httpRequest web.IHttpRequest) interfaces.ExchangeServer {
+	return &exchangeServer{
 		config:      config,
 		logger:      logger,
 		httpRequest: httpRequest,
 	}
 }
 
-func (r *economyRepository) USDBRL(ctx context.Context) (*dtos.USDBRLOutput, error) {
+func (r *exchangeServer) Exchange(ctx context.Context) (*dtos.USDBRLOutput, error) {
 	apiUrl, err := url.Parse(r.config.EconomyBaseURL)
 	if err != nil {
 		r.logger.Errorw("error building apiUrl", zap.Error(err))

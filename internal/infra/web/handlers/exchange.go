@@ -23,5 +23,5 @@ func (h *ExchangeHandler) CreateExchange(w http.ResponseWriter, r *http.Request)
 		responses.Error(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	responses.JSON(w, http.StatusOK, economy.USDBRL)
+	responses.JSON(w, http.StatusOK, economy)
 }
