@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/jailtonjunior94/challenge-client-server/internal/usecases"
@@ -18,7 +19,7 @@ func NewExchangeHandler(createExchange *usecases.CreateExchangeUseCase) *Exchang
 }
 
 func (h *ExchangeHandler) CreateExchange(w http.ResponseWriter, r *http.Request) {
-	economy, err := h.createExchange.Execute(r.Context())
+	economy, err := h.createExchange.Execute(context.Background())
 	if err != nil {
 		responses.Error(w, http.StatusInternalServerError, err.Error())
 		return

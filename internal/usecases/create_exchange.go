@@ -38,7 +38,7 @@ func (u *CreateExchangeUseCase) Execute(ctx context.Context) (*dtos.USDBRLOutput
 
 	economy, err := u.economyRepository.USDBRL(ctx)
 	if err != nil {
-		u.logger.Errorw(err.Error())
+		u.logger.Errorw(err.Error(), zap.Error(err))
 		return nil, err
 	}
 
@@ -57,7 +57,7 @@ func (u *CreateExchangeUseCase) Execute(ctx context.Context) (*dtos.USDBRLOutput
 	ctxDatabase, cancelDatabase := context.WithTimeout(ctx, time.Duration(u.config.DBTimeout*int(time.Millisecond)))
 	defer cancelDatabase()
 	if err := u.exchangeRepository.Save(ctxDatabase, exchange); err != nil {
-		u.logger.Errorw(err.Error())
+		u.logger.Errorw(err.Error(), zap.Error(err))
 		return nil, err
 	}
 	return economy, nil

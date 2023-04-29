@@ -18,6 +18,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	_ "github.com/mattn/go-sqlite3"
+	"go.uber.org/zap"
 )
 
 func main() {
@@ -57,7 +58,7 @@ func main() {
 
 	listener, err := net.Listen("tcp", fmt.Sprintf(":%s", config.ServerPort))
 	if err != nil {
-		panic(err)
+		logger.Errorw(err.Error(), zap.Error(err))
 	}
 	server.Serve(listener)
 }

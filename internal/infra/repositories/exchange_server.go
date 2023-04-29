@@ -29,13 +29,13 @@ func NewExchangeServer(config *configs.Config, logger *zap.SugaredLogger, httpRe
 }
 
 func (r *exchangeServer) Exchange(ctx context.Context) (*dtos.USDBRLOutput, error) {
-	apiUrl, err := url.Parse(r.config.EconomyBaseURL)
+	apiUrl, err := url.Parse(r.config.ServerBaseURL + "/cotacao")
 	if err != nil {
 		r.logger.Errorw("error building apiUrl", zap.Error(err))
 		return nil, err
 	}
 
-	response, err := r.httpRequest.Request(ctx, http.MethodGet, apiUrl.String(), "application/json", nil, "")
+	response, err := r.httpRequest.Request(ctx, http.MethodPost, apiUrl.String(), "application/json", nil, "")
 	if err != nil {
 		r.logger.Errorw("error fetch usd brl in external api", zap.Error(err))
 		return nil, err

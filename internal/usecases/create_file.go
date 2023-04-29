@@ -36,20 +36,20 @@ func (u *CreateFileUseCase) Execute(ctx context.Context) error {
 
 	exchange, err := u.exchangeServer.Exchange(ctx)
 	if err != nil {
-		u.logger.Errorw(err.Error())
+		u.logger.Errorw(err.Error(), zap.Error(err))
 		return err
 	}
 
 	file, err := os.Create("cotacao.txt")
 	if err != nil {
-		u.logger.Errorw(err.Error())
+		u.logger.Errorw(err.Error(), zap.Error(err))
 		return err
 	}
 	defer file.Close()
 
 	size, err := file.Write([]byte(fmt.Sprintf("Dólar: %s", exchange.USDBRL.Bid)))
 	if err != nil {
-		u.logger.Errorw(err.Error())
+		u.logger.Errorw(err.Error(), zap.Error(err))
 		return err
 	}
 

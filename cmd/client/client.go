@@ -9,6 +9,8 @@ import (
 	"github.com/jailtonjunior94/challenge-client-server/internal/usecases"
 	"github.com/jailtonjunior94/challenge-client-server/pkg/logger"
 	"github.com/jailtonjunior94/challenge-client-server/pkg/web"
+
+	"go.uber.org/zap"
 )
 
 func main() {
@@ -29,6 +31,6 @@ func main() {
 	createExchangeUseCase := usecases.NewCreateFileUseCase(config, logger, exchangeServer)
 
 	if err := createExchangeUseCase.Execute(context.Background()); err != nil {
-		panic(err)
+		logger.Errorw(err.Error(), zap.Error(err))
 	}
 }
